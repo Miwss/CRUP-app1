@@ -1,15 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Update Person</title>
 </head>
 <body>
-<!--Тут у нас страница - которая добавляет нового человека, поля заполнения указываем сами.-->
-<form th:method="POST" th:action="@{/people}" th:object="${person}">
+<!--Тут у нас страница изменения информации, указываем поля которые можем изменять-->
+<form th:method="PATCH" th:action="@{/people/{id}(id=${person.getId()})}"
+      th:object="${person}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
@@ -22,9 +20,8 @@
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
     <br/>
-    <input type="submit" value="Create!"/>
+    <input type="submit" value="Update!"/>
 
 </form>
-
 </body>
 </html>

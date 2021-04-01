@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,8 +8,16 @@
     <title>Все люди</title>
 </head>
 <body>
+<!--тут у нас отображается информация о человека, в частности имя и возраст(можем добавить сами любую информацию)-->
     <div th:each="person : ${people}">
-        <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}">user</a>
+        <a th:href="@{/people/{id}(id=${person.getId()})}"
+           th:text="${person.getName() + ', ' + person.getAge() + ', ' + person.getEmail()}">user</a>
     </div>
+    <br/>
+    <hr/>
+
+
+    <a href="/people/new">Create new person</a>
+
 </body>
 </html>

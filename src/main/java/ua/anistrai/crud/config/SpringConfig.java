@@ -11,30 +11,32 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
-/**
- * @author Neil Alishev
- */
+
+//Заменяет файл ApplicationContext.xml
 @Configuration
 @ComponentScan("ua.anistrai.crud")
 @EnableWebMvc
-public class SpringConfig implements WebMvcConfigurer {
+public class SpringConfig implements WebMvcConfigurer {//данный интерфейс реализуется тогда, когда мы хотим настроить спринг мвс под себя.
 
     private final ApplicationContext applicationContext;
 
+    //С помощью аннотации внедряем applicationContext
     @Autowired
     public SpringConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
+    //данный applicationContext используется в данном бине для настройки нашего шаблонизатора
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/WEB-INF/views/");
-        templateResolver.setSuffix(".html");
+        templateResolver.setPrefix("/WEB-INF/views/"); //указываем папку где будут лежать наши представления
+        templateResolver.setSuffix(".html"); //указываем их расширегия
         return templateResolver;
     }
 
+    //В данном бине так же производится конфигурация наших представлений
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
@@ -43,6 +45,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return templateEngine;
     }
 
+    //В данном методе мы задаем наш шаблонизатор! //передаем спрингу что хотим использовать thymeleaf!
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
@@ -50,3 +53,4 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 }
+//данная конфигурация полностью эквивалентна файлу applicationContext.xml
